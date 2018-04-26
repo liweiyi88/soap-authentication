@@ -21,3 +21,5 @@ yarn-error.log
 /.web-server-pid
 ###< symfony/web-server-bundle ###
 /lib/
+/supervisord.log
+/supervisord.pid
