@@ -23,7 +23,16 @@ class SecurityHeaderExtractor
     {
         $crawler = $this->registerNamespaces(new Crawler($xml));
         $username = $crawler->filterXPath(self::USERNAME_XPATH)->text();
+
+        if (empty($username)) {
+            throw new \InvalidArgumentException('Username should not be empty');
+        }
+
         $password = $crawler->filterXPath(self::PASSWORD_XPATH)->text();
+
+        if (empty($password)) {
+            throw new \InvalidArgumentException('Password should not be empty');
+        }
 
         return new SecurityHeader($username, $password);
     }
