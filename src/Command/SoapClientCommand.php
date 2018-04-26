@@ -29,15 +29,14 @@ class SoapClientCommand extends Command
         $headers[] = $this->generateSecurityHeader('julian', '123', 'fdsfs', '2015-08-06T07:22:39.464Z');
         $soapClient->__setSoapHeaders($headers);
 
-        dump($soapClient->__call('hello', array('name' => 'Scott')));
-
-        dump($soapClient->__getLastRequest());
-        //dump($soapClient->__getFunctions());
+        $token = $soapClient->__call('getToken', []);
+        dump($token);
     }
 
     /**
      * @param $username
      * @param $password
+     * @param $nonce
      * @param $createdAt - 2015-08-06T07:22:39.464Z
      * @return \SoapHeader
      */

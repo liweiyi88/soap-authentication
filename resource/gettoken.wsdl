@@ -7,50 +7,50 @@
              xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
              xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
              xmlns="http://schemas.xmlsoap.org/wsdl/"
-             targetNamespace="urn:helloservicewsdl">
+             targetNamespace="urn:gettokenservicewsdl">
 
     <types>
-        <xsd:schema targetNamespace="urn:hellowsdl">
+        <xsd:schema targetNamespace="urn:gettokenwsdl">
             <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
             <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" />
         </xsd:schema>
     </types>
 
-    <message name="helloRequest">
+    <message name="TokenRequest">
         <part name="name" type="xsd:string" />
     </message>
 
-    <message name="helloResponse">
-        <part name="return" type="xsd:string" />
+    <message name="TokenResponse">
+        <part name="Token" type="xsd:string" />
     </message>
 
-    <portType name="hellowsdlPortType">
-        <operation name="hello">
-            <documentation>Hello World</documentation>
-            <input message="tns:helloRequest"/>
-            <output message="tns:helloResponse"/>
+    <portType name="gettokenwsdlPortType">
+        <operation name="GetToken">
+            <documentation>GetToken service will return a SSO token.</documentation>
+            <input message="tns:TokenRequest"/>
+            <output message="tns:TokenResponse"/>
         </operation>
     </portType>
 
-    <binding name="hellowsdlBinding" type="tns:hellowsdlPortType">
+    <binding name="gettokenwsdlBinding" type="tns:gettokenwsdlPortType">
         <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
-        <operation name="hello">
-            <soap:operation soapAction="urn:arnleadservicewsdl#hello" style="rpc"/>
+        <operation name="GetToken">
+            <soap:operation soapAction="urn:arnleadservicewsdl#GetToken" style="rpc"/>
 
             <input>
-                <soap:body use="encoded" namespace="urn:hellowsdl"
+                <soap:body use="encoded" namespace="urn:gettokenwsdl"
                            encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
             </input>
 
             <output>
-                <soap:body use="encoded" namespace="urn:hellowsdl"
+                <soap:body use="encoded" namespace="urn:gettokenwsdl"
                            encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
             </output>
         </operation>
     </binding>
 
-    <service name="hellowsdl">
-        <port name="hellowsdlPort" binding="tns:hellowsdlBinding">
+    <service name="gettokenwsdl">
+        <port name="gettokenwsdlPort" binding="tns:gettokenwsdlBinding">
             <soap:address location="http://localhost:8888/soap" />
         </port>
     </service>

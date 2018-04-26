@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Service\GetTokenService;
 use App\Service\HelloService;
 use App\Service\SoapAuthenticator;
 use SoapServer;
@@ -22,11 +23,11 @@ class SoapController extends Controller
     /**
      * @Route("/soap", name="soap")
      */
-    public function index(SoapAuthenticator $authenticator, HelloService $helloService, Request $request)
+    public function index(GetTokenService $tokenService, Request $request)
     {
-       $soapServer = new SoapServer($this->projectDir.'/resource/auth.wsdl');
+       $soapServer = new SoapServer($this->projectDir.'/resource/gettoken.wsdl');
        //$soapServer->setObject($authenticator);
-       $soapServer->setObject($helloService);
+       $soapServer->setObject($tokenService);
 
        $response = new Response();
 
