@@ -7,17 +7,40 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class SecurityHeaderExtractor
 {
-    public function extract(string $xml): string
-    {
-        $crawler = new Crawler($xml);
+    public const USERNAME_XPATH = '//wsse:Security/wsse:UsernameToken/wsse:Username';
+    public const PASSWORD_XPATH = '//wsse:Security/wsse:UsernameToken/wsse:Password';
 
-        $crawler->registerNamespace('S11 ', 'http://schemas.xmlsoap.org/soap/envelope/');
-        $crawler->registerNamespace('wsse', 'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd');
-        $crawler->registerNamespace('wsu', 'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd');
-        $crawler = $crawler->filterXPath('//wsse:Security/wsse:UsernameToken/wsse:Username');
-        dump($crawler);
-        var_dump($crawler->text());
-        die;
-        $crawler->text();
+    /**
+     * Extract username, password from xml.
+     *
+     * @param string $xml
+     *
+     * @return SecurityHeader
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function extract(string $xml): SecurityHeader
+    {
+        $crawler = $this->registerNamespaces(new Crawler($xml));
+        $username = $crawler->filterXPath(self::USERNAME_XPATH)->text();
+        $password = $crawler->filterXPath(self::PASSWORD_XPATH)->text();
+
+        return new SecurityHeader($username, $password);
+    }
+
+    /**
+     * Register header namespaces.
+     *
+     * @param Crawler $crawler
+     *
+     * @return Crawler
+     */
+    private function registerNamespaces(Crawler $crawler): Crawler
+    {
+        $crawler->registerNamespace(SecurityHeader::PREFIX_S11, SecurityHeader::NS_S11);
+        $crawler->registerNamespace(SecurityHeader::PREFIX_WSSE, SecurityHeader::NS_WSSE);
+        $crawler->registerNamespace(SecurityHeader::PREFIX_WSU, SecurityHeader::NS_WSU);
+
+        return $crawler;
     }
 }
