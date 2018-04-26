@@ -11,7 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class SoapClientCommand extends Command
 {
-    protected static $defaultName = 'soap:client';
+    protected static $defaultName = 'create:token';
 
     protected function configure()
     {
@@ -29,8 +29,9 @@ class SoapClientCommand extends Command
         $headers[] = $this->generateSecurityHeader('julian', '123', 'fdsfs', '2015-08-06T07:22:39.464Z');
         $soapClient->__setSoapHeaders($headers);
 
-        $token = $soapClient->__call('getToken', '');
+        $token = $soapClient->__call('getToken', ['client_code', 'action', 'programcode', 'isvalid', true, false]);
         dump($token);
+        dump($soapClient->__getLastRequest());
     }
 
     /**

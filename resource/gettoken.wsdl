@@ -17,7 +17,12 @@
     </types>
 
     <message name="TokenRequest">
-        <part name="name" type="xsd:string" />
+        <part name="Action" type="xsd:string" />
+        <part name="ClientCode" type="xsd:string" />
+        <part name="ProgramCode" type="xsd:string" />
+        <part name="SiteCode" type="xsd:string" />
+        <part name="ExternalRefernce" type="xsd:string" />
+        <part name="IsValid" type="xsd:boolean" />
     </message>
 
     <message name="TokenResponse">

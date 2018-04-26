@@ -5,9 +5,15 @@ namespace App\Service;
 
 class GetTokenService
 {
-    public function getToken()
-    {
-        return 'my token';
+    public function getToken(
+        string $action,
+        string $clientCode,
+        string $programCode,
+        string $siteCode,
+        string $externalRefernce,
+        bool $isValid
+    ): string {
+        return $action.$clientCode.$programCode.$siteCode.$externalRefernce.$isValid;
     }
 
 }
